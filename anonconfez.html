@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Report an Issue</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Report an Issue</h1>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Submit Your Problem</h2>
+            <form id="issueForm">
+                <label for="problemText">Describe the Problem:</label><br>
+                <textarea id="problemText" rows="4" cols="50"></textarea><br>
+                <label for="institutionPhoto">Upload Photo of Institution:</label><br>
+                <input type="file" id="institutionPhoto" accept="image/*"><br>
+                <button type="button" onclick="submitIssue()">Submit</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Your Website Name</p>
+    </footer>
+
+    <script>
+        function submitIssue() {
+            const problemText = document.getElementById("problemText").value;
+            const institutionPhoto = document.getElementById("institutionPhoto").files[0];
+
+            // Check if local storage is supported
+            if (typeof(Storage) !== "undefined") {
+                // Store the problem text in local storage
+                localStorage.setItem("problemText", problemText);
+
+                // Store the institution photo as a Base64-encoded string
+                if (institutionPhoto) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        localStorage.setItem("institutionPhoto", e.target.result);
+                        alert("Issue submitted successfully!");
+                    };
+                    reader.readAsDataURL(institutionPhoto);
+                } else {
+                    alert("Issue submitted successfully!");
+                }
+            } else {
+                alert("Local storage is not supported in your browser.");
+            }
+        }
+    </script>
+</body>
+</html>
